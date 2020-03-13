@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body class="layui-layout-body" >
+<link rel="stylesheet"th:href="@{/layui/css/layui.css}">
+<div class="layui-layout layui-layout-admin">
+    <div th:replace="main::header"></div>
+    <div th:replace="main::sider"></div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div class="layui-body" style="width: 500px;margin: 50px 10%" >
+            <!--此处加表格等显示内容-->
+            <form class="layui-form" th:action="@{/user/addEquipLoss}" method="post">
+                <input type="hidden" value="post" name="_method">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">equip_loss_id</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="equipLossId"  autocomplete="off"  placeholder="请输入id"  class="layui-input">
+                    </div>
+                    <label class="layui-form-label">设备名</label>
+                    <div class="layui-input-block">
+                        <input  type="text"  autocomplete="off" placeholder="请输入设备名"  class="layui-input">
+                    </div>
+                    <div class="layui-form-text">
+                        <label class="layui-form-label">损坏原因</label>
+                        <div class="layui-input-block">
+                            <textarea placeholder="请简要说明损坏原因" class="layui-textarea"  name="reason"></textarea>
+                        </div>
+                    </div>
+                    <div class="layui-form-text">
+                        <label class="layui-form-label">损坏情况</label>
+                        <div class="layui-input-block">
+                            <textarea placeholder="请简要描述损坏情况" class="layui-textarea"  name="lossDesc"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+    <div th:replace="main::footer"></div>
+</div>
+<script th:src="@{/layui/layui.js}"></script>
+<script>
+    //JavaScript代码区域
+    layui.use('element', function(){
+        var element = layui.element;
+
+    });
+</script>
+</body>
+</html>

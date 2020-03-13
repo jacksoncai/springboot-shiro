@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body class="layui-layout-body" >
+<link rel="stylesheet"th:href="@{/layui/css/layui.css}">
+<div class="layui-layout layui-layout-admin">
+    <div th:replace="main::header"></div>
+    <div th:replace="main::sider"></div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div class="layui-body" style="width: 500px;margin: 50px 10%" >
+            <!--此处加表格等显示内容-->
+            <a class="layui-btn layui-btn-lg layui-btn-warm" th:href="@{/addDep}">添加部门</a>
+            <table id="demo" lay-filter="test"></table>
+
+        </div>
+    </div>
+    <div th:replace="main::footer"></div>
+</div>
+<script th:src="@{/layui/layui.js}"></script>
+<script>
+    //JavaScript代码区域
+    layui.use('element', function(){
+        var element = layui.element;
+
+    });
+</script>
+<script>
+    layui.use('table', function(){
+        var table = layui.table;
+
+        //第一个实例
+        table.render({
+            elem: '#demo'
+            ,height: '400'
+            ,url: '/dep/json' //数据接口,向DepController请求
+            ,page: true //开启分页
+            ,cols: [
+                [ //表头
+                    {field: 'departmentId', title: '部门ID', width:240, sort: true, fixed:'left'}
+                    ,{field: 'departmentName', title: '部门名', width:240}
+                ]
+            ]
+        });
+
+    });
+</script>
+</body>
+</html>
+
+

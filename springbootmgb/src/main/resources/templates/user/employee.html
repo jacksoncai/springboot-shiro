@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body class="layui-layout-body">
+<link rel="stylesheet" th:href="@{/layui/css/layui.css}">
+<div class="layui-layout layui-layout-admin">
+    <div th:replace="main::header"></div>
+    <div th:replace="main::sider"></div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div class="layui-body" style="width: 900px; height:600px;margin: 50px 5%" >
+            <!--此处加表格等显示内容-->
+            <div class="layui-form-item">
+            <a class="layui-btn layui-btn-lg layui-btn-warm" th:href="@{/user/addEmployee}">添加员工</a>
+            </div>
+                <!--模糊查询-->
+            <form class="layui-form" th:action="@{/user/selectEmployee}" method="get">
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <!--向controller传一个condition作为参数-->
+                        <input type="text" name="condition" placeholder="输入员工姓名开始模糊查询" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button type="submit" class="layui-btn" lay-filter="demo1">开始查询</button>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    </div>
+                </div>
+
+            </form>
+
+            <table class="layui-table" lay-skin="line">
+                <thead>
+                <tr>
+                    <th>员工编号</th>
+                    <th>员工姓名</th>
+                    <th>部门名</th>
+                    <th>性别</th>
+                    <th>手机号</th>
+                    <th>生日</th>
+                    <th colspan="2">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr data-th-each="entity : ${employees}">
+                    <td data-th-text="${entity.empId}">...</td>
+                    <td data-th-text="${entity.empName}">...</td>
+                    <td data-th-text="${entity.department.departmentName}">...</td>
+                    <td data-th-text="${entity.gender}">...</td>
+                    <td data-th-text="${entity.phone}">...</td>
+                    <td data-th-text="${#dates.format(entity.birth, 'yyyy-MM-dd ')}">...</td>
+                    <td>
+                        <a class="layui-btn layui-btn-xs" th:href="@{/user/updateEmployee/}+${entity.getEmpId()}">编辑</a>
+                    </td>
+                    <td>
+                        <a type="submit" value="删除" class="layui-btn layui-btn-xs layui-btn-danger"
+                           th:href="@{/user/deleteEmployee/}+${entity.getEmpId()}">删除</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div th:replace="main::footer"></div>
+</div>
+<script th:src="@{/layui/layui.js}"></script>
+<script>
+    //JavaScript代码区域
+    layui.use('element', function () {
+        var element = layui.element;
+
+    });
+</script>
+
+<script type="text/javascript">
+    function del() {
+        var r = confirm("是否确认删除")
+        if (r == true) {
+            alert("已经删除成功!")
+        } else {
+            return false;
+        }
+    }
+</script>
+<script src="../../static/jquery-2.0.3.js"></script>
+</body>
+</html>
+

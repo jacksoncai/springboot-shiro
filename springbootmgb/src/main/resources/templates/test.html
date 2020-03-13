@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <style type="text/css">
+        html, body {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            background: url('/img/content.png') no-repeat;
+            overflow: hidden;
+            height: 100%;
+            width: 100%;
+            -moz-background-size: 100% 100%;
+            background-size: 100% 100%;
+        }
+    </style>
+</head>
+<body class="layui-layout-body">
+<link rel="stylesheet" th:href="@{/layui/css/layui.css}">
+<div class="layui-layout layui-layout-admin">
+    <div th:replace="main::header"></div>
+    <div th:replace="main::sider"></div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div class="layui-body" style="width: 400px;margin: 150px 20%">
+            <!--此处加表格等显示内容-->
+
+            <form class="layui-form" th:action="@{/toLogin}" method="post">
+                <div class="layui-form-item" >
+                    <label class="layui-form-label">用户名</label>
+                    <div class="layui-input-block">
+                        <input type="text"
+                               name="uName"
+                               autocomplete="off"
+                               lay-verify="title"
+                               placeholder="请输入登录用户名"
+                               class="layui-input">
+                    </div>
+                    </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">密码</label>
+                    <div class="layui-input-block">
+                        <input type="text"
+                               name="password"
+                               lay-verify="required"
+                               autocomplete="off"
+                               placeholder="请输入密码"
+                               class="layui-input">
+                    </div>
+                    </div>
+                        <div class="layui-input-block">
+                            <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">登录</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                        </div>
+            </form>
+        </div>
+    </div>
+    <div th:replace="main::footer"></div>
+</div>
+<script th:src="@{/layui/layui.js}"></script>
+<script>
+    //JavaScript代码区域
+    layui.use('element', function () {
+        var element = layui.element;
+
+    });
+</script>
+<script>
+    layui.use(['form', 'layedit', 'laydate'], function () {
+        var form = layui.form
+            , layer = layui.layer
+            , layedit = layui.layedit
+            , laydate = layui.laydate;
+
+        //自定义验证规则
+        form.verify({
+            title: function (value) {
+                if (value.length < 2) {
+                    return '长度至少得2个字符啊';
+                }
+                if (value.length > 8) {
+                    return '长度不能超过8个字符啊';
+                }
+            }
+            , pass: [
+                /^[\S]{8,11}$/
+                , '电话号必须8到11位，且不能出现空格'
+            ]
+            , content: function (value) {
+                layedit.sync(editIndex);
+            }
+        });
+
+    });
+</script>
+</body>
+</html>

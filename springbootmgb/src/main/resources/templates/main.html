@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-shiro"
+      xmlns:shiro="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>layout 后台大布局 - Layui</title>
+    <style type="text/css">
+    html, body {
+        height: 100%;
+        overflow: hidden;
+    }
+
+    body {
+        background: url('/img/content.png') no-repeat;
+        overflow: hidden;
+        height: 100%;
+        width: 100%;
+        -moz-background-size: 100% 100%;
+        background-size: 100% 100%;
+    }
+</style>
+
+</head>
+<body class="layui-layout-body">
+<link rel="stylesheet" th:href="@{/layui/css/layui.css}">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header" th:fragment="header">
+        <a th:href="@{/main}">
+            <div class="layui-logo">蜗牛医院</div>
+        </a>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item"><a th:href="@{/user/employee}">员工管理</a></li>
+            <li class="layui-nav-item"><a th:href="@{/user/department}">部门管理</a></li>
+            <li class="layui-nav-item"><a th:href="@{/user/equipment}">设备管理</a></li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;" th:text="${username}">
+                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                    贤心
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">基本资料</a></dd>
+                    <dd><a href="">安全设置</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a th:href="@{/logout}">退出</a></li>
+        </ul>
+    </div>
+
+
+    <li class="layui-nav-item"><a th:href="@{/user/employee}">员工管理</a></li>
+    <li class="layui-nav-item"><a th:href="@{/user/department}">部门管理</a></li>
+    <li class="layui-nav-item"><a th:href="@{/user/equipment}">设备管理</a></li>
+
+
+    <div class="layui-side layui-bg-black" th:fragment="sider">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a href="javascript:;">员工管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a th:href="@{/user/employee}">查看所有员工</a></dd>
+                        <dd><a th:href="@{/user/addEmployee}">添加员工</a></dd>
+                        <dd><a th:href="@{/user/employee}">修改员工</a></dd>
+                        <dd><a th:href="@{/user/employee}">删除员工</a></dd>
+                    </dl>
+                </li>
+
+                <li class="layui-nav-item ">
+                    <a href="javascript:;">部门管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a th:href="@{/user/department}">查看所有部门</a></dd>
+                        <dd><a th:href="@{/user/addDep}">添加部门</a></dd>
+                        <dd><a th:href="@{/user/department}">修改部门</a></dd>
+                        <dd><a th:href="@{/user/department}">删除部门</a></dd>
+                    </dl>
+                </li>
+
+                <li class="layui-nav-item ">
+                    <a class="">设备损坏</a>
+                    <dl class="layui-nav-child">
+                        <dd><a th:href="@{/user/equipLoss}">查看设备损坏情况</a></dd>
+                        <dd><a th:href="@{/user/addEquipLoss}">添加设备损坏情况</a></dd>
+                        <dd><a th:href="@{/user/equipLoss}">修改设备损坏情况</a></dd>
+                        <dd><a th:href="@{/user/equipLoss}">删除设备损坏情况</a></dd>
+                    </dl>
+                </li>
+
+                <li class="layui-nav-item ">
+                    <a href="javascript:;">设备管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a th:href="@{/user/equipment}">查看设备所有</a></dd>
+                        <dd><a th:href="@{/user/equipLoss}">设备损坏及上报</a></dd>
+                    </dl>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+
+        <div class="layui-body" style="width: 800px;margin: 50px 10%">
+          <!--  <button th:text="${msg}" class="layui-slider-input-btn"
+                    th:href="@{/user/employee}"></button>-->
+
+
+            <p th:text="${msg}" style="font-size: 30px;color: lavender"></p>
+
+        </div>
+
+
+     <!-- <div shiro:hasPermission="">
+        <a th:href="@{/login}">Log in</a>
+      </div>
+-->
+        <div class="layui-footer" th:fragment="footer">
+            <!-- 底部固定区域 -->
+            © layui.com - 底部固定区域
+        </div>
+    </div>
+    <script th:src="@{/layui/layui.js}"></script>
+    <script>
+        //JavaScript代码区域
+        layui.use('element', function () {
+            var element = layui.element;
+
+        });
+    </script>
+    <script>
+        layui.use('table', function () {
+            var table = layui.table;
+
+            //第一个实例
+            table.render({
+                elem: '#demo'
+                , height: 312
+                , url: '/dep/json' //数据接口,向DepController请求
+                , page: true //开启分页
+                , cols: [
+                    [ //表头
+                        {field: 'departmentId', title: '部门ID', width: 120, sort: true, fixed: 'left'}
+                        , {field: 'departmentName', title: '部门名', width: 120}
+                    ]
+                ]
+            });
+
+        });
+    </script>
+</body>
+</html>

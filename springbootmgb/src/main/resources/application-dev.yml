@@ -1,0 +1,21 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    username: root
+    password: 123456
+#    数据库名换成自己主机相应的
+    url: jdbc:mysql://localhost:3306/hos?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+#配置mybatis
+mybatis:
+  mapper-locations: classpath:mapper/*Mapper.xml
+  type-aliases-package: com.csd.entity
+#showSql
+logging:
+  level:
+    com:
+      csd:
+        mapper : debug

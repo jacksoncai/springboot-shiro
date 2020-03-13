@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.csd.mapper.EquipLossMapper">
+  <resultMap id="BaseResultMap" type="com.csd.entity.EquipLoss">
+    <id column="equip_loss_id" jdbcType="CHAR" property="equipLossId" />
+    <result column="equip_id" jdbcType="INTEGER" property="equipId" />
+    <result column="loss_desc" jdbcType="CHAR" property="lossDesc" />
+    <result column="reason" jdbcType="CHAR" property="reason" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    equip_loss_id, equip_id, loss_desc, reason
+  </sql>
+  <select id="selectByExample" parameterType="com.csd.entity.EquipLossExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from equip_loss
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from equip_loss
+    where equip_loss_id = #{equipLossId,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from equip_loss
+    where equip_loss_id = #{equipLossId,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.csd.entity.EquipLossExample">
+    delete from equip_loss
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.csd.entity.EquipLoss">
+    insert into equip_loss (equip_loss_id, equip_id, loss_desc, 
+      reason)
+    values (#{equipLossId,jdbcType=CHAR}, #{equipId,jdbcType=INTEGER}, #{lossDesc,jdbcType=CHAR}, 
+      #{reason,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.csd.entity.EquipLoss">
+    insert into equip_loss
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="equipLossId != null">
+        equip_loss_id,
+      </if>
+      <if test="equipId != null">
+        equip_id,
+      </if>
+      <if test="lossDesc != null">
+        loss_desc,
+      </if>
+      <if test="reason != null">
+        reason,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="equipLossId != null">
+        #{equipLossId,jdbcType=CHAR},
+      </if>
+      <if test="equipId != null">
+        #{equipId,jdbcType=INTEGER},
+      </if>
+      <if test="lossDesc != null">
+        #{lossDesc,jdbcType=CHAR},
+      </if>
+      <if test="reason != null">
+        #{reason,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.csd.entity.EquipLossExample" resultType="java.lang.Long">
+    select count(*) from equip_loss
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update equip_loss
+    <set>
+      <if test="record.equipLossId != null">
+        equip_loss_id = #{record.equipLossId,jdbcType=CHAR},
+      </if>
+      <if test="record.equipId != null">
+        equip_id = #{record.equipId,jdbcType=INTEGER},
+      </if>
+      <if test="record.lossDesc != null">
+        loss_desc = #{record.lossDesc,jdbcType=CHAR},
+      </if>
+      <if test="record.reason != null">
+        reason = #{record.reason,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update equip_loss
+    set equip_loss_id = #{record.equipLossId,jdbcType=CHAR},
+      equip_id = #{record.equipId,jdbcType=INTEGER},
+      loss_desc = #{record.lossDesc,jdbcType=CHAR},
+      reason = #{record.reason,jdbcType=CHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.csd.entity.EquipLoss">
+    update equip_loss
+    <set>
+      <if test="equipId != null">
+        equip_id = #{equipId,jdbcType=INTEGER},
+      </if>
+      <if test="lossDesc != null">
+        loss_desc = #{lossDesc,jdbcType=CHAR},
+      </if>
+      <if test="reason != null">
+        reason = #{reason,jdbcType=CHAR},
+      </if>
+    </set>
+    where equip_loss_id = #{equipLossId,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.csd.entity.EquipLoss">
+    update equip_loss
+    set equip_id = #{equipId,jdbcType=INTEGER},
+      loss_desc = #{lossDesc,jdbcType=CHAR},
+      reason = #{reason,jdbcType=CHAR}
+    where equip_loss_id = #{equipLossId,jdbcType=CHAR}
+  </update>
+</mapper>

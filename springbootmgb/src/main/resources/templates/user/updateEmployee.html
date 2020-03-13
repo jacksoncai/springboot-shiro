@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body class="layui-layout-body">
+<link rel="stylesheet" th:href="@{/layui/css/layui.css}">
+<div class="layui-layout layui-layout-admin">
+    <div th:replace="main::header"></div>
+    <div th:replace="main::sider"></div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div class="layui-body" style="width: 500px;margin: 50px 10%">
+            <!--此处加表格等显示内容-->
+            <form class="layui-form" th:action="@{/user/updateEmployee}" method="post">
+                <input type="hidden" value="put" name="_method">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">员工编号</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="empId" readonly="readonly" autocomplete="off"
+                               th:value="${employee.empId}" class="layui-input">
+                    </div>
+
+                    <label class="layui-form-label">部门id</label>
+                    <div class="layui-input-block">
+                        <input type="text"  autocomplete="off"
+                               th:value="${employee.department.departmentId}"
+                               name="departmentId"
+                               class="layui-input">
+                    </div>
+                    <label class="layui-form-label">员工姓名</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="empName" autocomplete="off"
+                               th:value="${employee.empName}" class="layui-input">
+                    </div>
+
+                    <label class="layui-form-label">手机号</label>
+                    <div class="layui-input-block">
+                        <input name="phone" th:value="${employee.phone}" lay-verify="pass" class="layui-input"/>
+                    </div>
+
+                    <label class="layui-form-label">性别</label>
+                    <div class="layui-input-block">
+                        <input name="gender" th:value="${employee.gender}" class="layui-input"/>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">生日</label>
+                        <div class="layui-input-inline">                                                <!--日期格式化-->
+                            <input type="text" name="birth" id="date"
+                                   th:placeholder="${#dates.format(employee.birth,'yyyy-MM-dd')}" autocomplete="off"
+                                   class="layui-input">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+    <div th:replace="main::footer"></div>
+</div>
+<script th:src="@{/layui/layui.js}"></script>
+<script>
+    //JavaScript代码区域
+    layui.use('element', function () {
+        var element = layui.element;
+
+    });
+</script>
+
+<script>
+    layui.use(['form', 'layedit', 'laydate'], function () {
+        var form = layui.form
+            , layer = layui.layer
+            , layedit = layui.layedit
+            , laydate = layui.laydate;
+
+        //日期
+        laydate.render({
+            elem: '#date'
+        });
+
+        //创建一个编辑器
+        var editIndex = layedit.build('LAY_demo_editor');
+
+        //自定义验证规则
+        form.verify({
+            title: function (value) {
+                if (value.length < 2) {
+                    return '长度至少得2个字符啊';
+                }
+                if (value.length > 16) {
+                    return '长度不能超过16个字符啊';
+                }
+            }
+            , pass: [
+                /^[\S]{8,11}$/
+                , '电话号必须8到11位，且不能出现空格'
+            ]
+            , content: function (value) {
+                layedit.sync(editIndex);
+            }
+        });
+
+    });
+</script>
+</body>
+</html>
